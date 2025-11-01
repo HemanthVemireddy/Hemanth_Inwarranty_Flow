@@ -1,0 +1,43 @@
+{
+	"info": {
+		"_postman_id": "acc8991a-d356-421f-ba14-d06753582950",
+		"name": "Global usage collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49076664",
+		"_collection_link": "https://hemanthkumar-vemireddy-4623406.postman.co/workspace/SDET-With-Jatin~85cd808a-5b75-4de4-87fa-fa5446f35f25/collection/49076664-acc8991a-d356-421f-ba14-d06753582950?action=share&source=collection_link&creator=49076664"
+	},
+	"item": [
+		{
+			"name": "Google",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(\"Pre condition\")\r",
+							"\r",
+							"pm.globals.get(\"DEMO-KEY\")"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.google.com",
+					"protocol": "https",
+					"host": [
+						"www",
+						"google",
+						"com"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
