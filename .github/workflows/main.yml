@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
 
@@ -33,45 +33,40 @@ jobs:
           -e QA.postman_environment.json \
           -d testData.csv \
           -r cli,htmlextra \
-          --reporter-htmlextra-export ./newman/index.html
+          --reporter-htmlextra-export newman/index.html
 
       - name: Upload HTML Report
         if: always()
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v4
         with:
           name: newman-html-reporter
           path: newman/*.html
 
-      - name: creating github page branch
+      - name: Deploy report to GitHub Pages
         if: always()
-        uses:  peaceiris/actions-gh-pages@v4.0.0
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: newman/
+          publish_dir: newman
 
       - name: Send Email Notification
         if: always()
-        uses: dawidd6/action-send-mail@v6
+        uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 465
-          username: {{ secrets.EMAIL_USERNAME }}
-          password: {{ secrets.EMAIL_PASSWORD }}
-          subject: API TEST Report - GITHUB ACTIONS
-          to: hemanthvemireddy7@gmail.com
-          from: {{ secrets.EMAIL_USERNAME }}
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "API TEST Report - GITHUB ACTIONS"
+          to: "hemanthvemireddy7@gmail.com"
+          from: ${{ secrets.EMAIL_USERNAME }}
           body: |
-                 Hello,
-                 Please find the attached HTML Report generated after running the postman test via GITHUB Actions (CI/CD Tool).
+            Hello,
 
-                 Link to live the report (Github Pages) : https://github.com/HemanthVemireddy/Hemanth_Inwarranty_Flow/
+            Please find the attached HTML Report generated after running the Postman tests via GitHub Actions (CI/CD Tool).
 
-                 Regards,
-                 Hemanth 
+            🔗 Live Report: https://hemanthvemireddy.github.io/Hemanth_Inwarranty_Flow/
+
+            Regards,  
+            Hemanth
           attachments: newman/index.html
-                 
-          
-          
-          
-          
-          
